@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Training - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- 1. Top Navigation Bar (Full Width) -->
+        <header class="nav-controls">
+            <!-- Removed Theme Selection -->
+            <div class="nav-group">
+                <label>Chapter</label>
+                <select id="chapterSelect" class="nav-select"></select>
+            </div>
+            <!-- Removed Section Selection -->
+
+            <button id="playAllSectionBtn" class="play-all-btn">
+                <span>▶ Play All</span>
+            </button>
+        </header>
+
+        <!-- 2. Main Content Row (Left & Right Cards) -->
+        <div class="content-row">
+            <!-- Left: Training Card -->
+            <main class="main-content">
+                <section class="training-card">
+                    <!-- Top Bar: Counter (Left) & Toggles (Right) -->
+                    <div class="training-header">
+                        <!-- Left: Counter & Progress -->
+                        <div class="header-left">
+                            <div id="sentenceCounter" class="sentence-badge">Loading...</div>
+                            <div class="progress-container">
+                                <div class="progress-bg">
+                                    <div id="progressFill" class="progress-fill"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: Toggles [MOVED HERE] -->
+                        <div class="toggle-group header-right">
+                            <button id="toggleSubtitle" class="toggle-pill">
+                                <span id="toggleText">Show Text</span>
+                            </button>
+                            <button id="toggleTranslation" class="toggle-pill">
+                                <span id="toggleTranslationText">Show Korean</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Center Content -->
+                    <div class="card-center-content">
+                        <!-- Repeat Counter (Visual Hero) -->
+                        <div class="repeat-display">
+                            <div id="currentRepeat" class="current-repeat">0</div>
+                            <div class="repeat-label">/ 10</div>
+                        </div>
+
+                        <!-- Waveform Visualizer -->
+                        <div id="waveform" class="waveform audio-visualizer">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+
+                        <!-- Text Area (Main) -->
+                        <div class="text-display-area">
+                            <div id="subtitleText" class="subtitle-text hidden">Loading Data...</div>
+                            <div id="translationText" class="translation-text hidden">번역 텍스트</div>
+                        </div>
+
+                        <!-- Control Buttons -->
+                        <div class="controls-area">
+                            <button id="startAutoBtn" class="control-btn start-btn">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="3">
+                                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                </svg>
+                                <span>Start Auto</span>
+                            </button>
+
+                            <button id="pauseBtn" class="control-btn" disabled>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <rect x="6" y="4" width="4" height="16"></rect>
+                                    <rect x="14" y="4" width="4" height="16"></rect>
+                                </svg>
+                                <span>Pause</span>
+                            </button>
+
+                            <button id="skipBtn" class="control-btn hidden">Skip</button>
+                        </div>
+                    </div>
+
+                    <!-- Bottom: Status Message [MOVED HERE] -->
+                    <div id="statusMessage" class="status-message-embedded">Ready to start</div>
+
+                </section>
+            </main>
+
+            <!-- Right: Feedback Card (Unified) -->
+            <aside class="right-sidebar">
+                <section class="feedback-card">
+                    <div class="card-padding">
+                        <span class="card-title">Real-time Feedback</span>
+
+                        <div class="score-list">
+                            <div class="score-item">
+                                <div class="score-name">🗣 Pronunciation</div>
+                                <div class="score-val" id="pronunciationScore">-</div>
+                            </div>
+                            <div class="score-bar-bg">
+                                <div id="pronunciationBar" class="score-bar-fill"></div>
+                            </div>
+
+                            <div class="score-item">
+                                <div class="score-name">🎵 Intonation</div>
+                                <div class="score-val" id="intonationScore">-</div>
+                            </div>
+                            <div class="score-bar-bg">
+                                <div id="intonationBar" class="score-bar-fill"></div>
+                            </div>
+
+                            <div class="score-item">
+                                <div class="score-name">⚡ Speed</div>
+                                <div class="score-val" id="speedScore">-</div>
+                            </div>
+                            <div class="score-bar-bg">
+                                <div id="speedBar" class="score-bar-fill"></div>
+                            </div>
+
+                            <div class="score-item highlight">
+                                <div class="score-name">✨ Total Sync</div>
+                                <div class="score-val" id="totalSyncScore">-</div>
+                            </div>
+                            <div class="score-bar-bg">
+                                <div id="totalSyncBar" class="score-bar-fill"></div>
+                            </div>
+                        </div>
+
+                        <!-- Divider / Spacer -->
+                        <div class="spacer-line"></div>
+
+                        <div class="stats-grid">
+                            <div class="stat-box">
+                                <span class="stat-num" id="totalAttempts">0</span>
+                                <span class="stat-lbl">Attempts</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-num" id="avgScore">0</span>
+                                <span class="stat-lbl">Avg Score</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="download-section">
+                        <button id="downloadBtn" class="download-full-btn">
+                            📥 Download Results
+                        </button>
+                    </div>
+                </section>
+                <!-- Hidden Elements -->
+                <div id="completedSentences" style="display:none;"></div>
+            </aside>
+        </div>
+    </div>
+
+    <script src="app.js?v=6"></script>
+</body>
+
+</html>
