@@ -620,4 +620,11 @@ body {
         width: 100%;
         justify-content: flex-end;
     }
+
+}
+/* 화면 높이에 맞춰 컨테이너가 늘어나도록 수정 */
+.container {
+    min-height: 100vh; /* 화면 전체 높이를 최소값으로 설정 */
+    height: auto;      /* 내용이 많아지면 자동으로 늘어남 */
+    padding-bottom: 50px; /* 맨 아래 글자가 잘리지 않게 여유 공간 추가 */
 }
